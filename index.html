@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="陈梓畅的具身智能与机器人作品集，聚焦视觉语言动作模型、四足移动操作和状态估计。">
+<title>陈梓畅 | 具身智能与机器人</title>
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<header class="shell top">
+  <a class="brand" href="#top" aria-label="陈梓畅，首页">陈梓畅<span> / ROBOTICS</span></a>
+  <nav aria-label="页面导航"><a href="#research">研究</a><a href="#results">评测</a><a href="#publications">论文与经历</a></nav>
+</header>
+<main id="top" class="shell">
+<section class="hero" aria-labelledby="hero-title">
+  <div class="intro">
+    <p class="eyebrow">具身智能 · 机器人学习</p>
+    <h1 id="hero-title">陈梓畅</h1>
+    <p class="subject">四足移动操作与 VLA</p>
+    <p class="lede">哈尔滨工业大学（深圳）控制工程硕士在读。研究如何把状态估计和记忆引入 VLA 策略，让机器人在部分可观的环境中完成移动、抓取和放置。</p>
+    <div class="links"><a class="button" href="#research">查看研究项目</a><a href="https://github.com/czc20030602">GitHub</a><a href="mailto:chenzichang39@gmail.com">邮箱</a></div>
+  </div>
+  <figure class="hero-media">
+    <video controls playsinline preload="none" poster="./assets/go2-piper.jpg" aria-label="Go2＋Piper 红方块往返搬运真机演示"><source src="./assets/go2-piper.mp4" type="video/mp4"><a href="./assets/go2-piper.mp4">下载 Go2＋Piper 演示</a></video>
+    <figcaption><strong>Go2＋Piper 真机</strong><span>抓取红方块，移至平台上方后放回原位</span></figcaption>
+  </figure>
+</section>
+<section id="research" class="section">
+  <header class="section-head"><p class="eyebrow">SELECTED RESEARCH</p><h2>研究项目</h2></header>
+  <div class="project-grid">
+    <article class="project">
+      <p class="tag">硕士课题</p>
+      <h3>基于状态估计与分层策略学习的部分可观四足移动操作</h3>
+      <p>基于 Go2＋Piper 搭建真机平台，用 Quest 遥操作采集头部与腕部相机、机器人状态和动作。上层策略生成底盘速度与机械臂目标，下层 RL 执行四足运动控制。</p>
+      <p>实现 ACT、Diffusion Policy 和 π₀.₅，并探索 VLA-JEPA、FastWAM 和实时动作块拼接（RTC）。</p>
+    </article>
+    <article class="project">
+      <p class="tag">π₀.₅ · 时序建模</p>
+      <h3>历史状态专家与递归记忆</h3>
+      <p>比较四种记忆结构在真机任务中的表现，并在 LIBERO、RMBench 和 RoboMME 中开展闭环评测。</p>
+      <dl class="methods">
+        <div><dt>历史状态专家</dt><dd>用可学习查询压缩 OPESKF 历史序列，供动作专家读取。</dd></div>
+        <div><dt>稀疏记忆专家</dt><dd>在指定动作专家层交互，每次观测更新记忆。</dd></div>
+        <div><dt>GRU / 矩阵记忆</dt><dd>分别用循环状态和矩阵状态保留历史观测。</dd></div>
+      </dl>
+    </article>
+  </div>
+</section>
+<section id="results" class="section">
+  <header class="section-head"><p class="eyebrow">EVALUATION</p><h2>π₀.₅ 后训练方法对比</h2><p>LIBERO-X · 各方法在同一组 105 个 episode 上评测</p></header>
+  <table class="scores">
+    <thead><tr><th scope="col">方法</th><th scope="col">成功率</th><th scope="col">成功次数</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">原始 π₀.₅</th><td><span style="--p:34.3%">34.3%</span></td><td>36 / 105</td></tr>
+      <tr><th scope="row">SFT</th><td><span style="--p:47.6%">47.6%</span></td><td>50 / 105</td></tr>
+      <tr class="best"><th scope="row">PPO-Full D10</th><td><span style="--p:54.3%">54.3%</span></td><td>57 / 105</td></tr>
+      <tr><th scope="row">RECAP R1</th><td><span style="--p:46.7%">46.7%</span></td><td>49 / 105</td></tr>
+    </tbody>
+  </table>
+</section>
+<section class="section showcase" aria-labelledby="lingbot-title">
+  <div><p class="eyebrow">LINGBOT-VLA 2.0</p><h2 id="lingbot-title">灵波挑战赛与真机迁移</h2>
+    <p>用 RoboTwin 2.0 的 2,500 条示教对 LingBot-VLA 2.0 6B 稀疏 MoE 做全参数微调，使用 FSDP2、Muon 和 BF16。仿真成功率为 Clean 83.2%、Randomized 48.6%。</p>
+    <p>另用 40 条 Go2＋Piper 真机示教微调，在实机上完成抓取、移动及放入黑盒。</p>
+  </div>
+  <figure>
+    <video controls playsinline preload="none" poster="./assets/lingbot.jpg" aria-label="LingBot-VLA Go2＋Piper 黑盒抓放真机演示"><source src="./assets/lingbot.mp4" type="video/mp4"><a href="./assets/lingbot.mp4">下载 LingBot 真机演示</a></video>
+    <figcaption><strong>Go2＋Piper 真机</strong><span>红方块抓取与黑盒放置</span></figcaption>
+  </figure>
+</section>
+<section id="publications" class="section">
+  <header class="section-head"><p class="eyebrow">PUBLICATIONS & EXPERIENCE</p><h2>论文与经历</h2></header>
+  <div class="project-grid background">
+    <div>
+      <h3>论文</h3>
+      <ul class="entries">
+        <li><p class="tag">IROS 2026 · 已录用 · 共一</p><p>OPESKF: Overdetermined Prediction Error-State Kalman Filter for Proprioceptive State Estimation in Legged Robots</p></li>
+        <li><p class="tag">IEEE T-ASE · 已录用 · 第二作者</p><p>Hierarchical Leg-Wise IMM Proprioceptive Odometry for Legged Robots With Dynamic Contact</p></li>
+      </ul>
+    </div>
+    <div>
+      <h3>教育与工程</h3>
+      <ul class="entries">
+        <li><p class="tag">哈尔滨工业大学（深圳）</p><p>控制工程硕士在读 · 2025.09–2028.06<br>自动化本科 · 2021.09–2025.06</p></li>
+        <li><p class="tag">RoboSense · 2024.10–2025.01</p><p>参与机械臂逆运动学、全身避障及 WBC–MPC 的 C++ 开发。</p></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="shell bottom"><span>陈梓畅</span><div><a href="mailto:chenzichang39@gmail.com">chenzichang39@gmail.com</a><a href="https://github.com/czc20030602">GitHub</a></div></footer>
+</body>
+</html>
